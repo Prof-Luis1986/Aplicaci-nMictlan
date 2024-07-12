@@ -71,6 +71,7 @@ def main(page: ft.Page):
     
     # Función para reproducir el nivel correspondiente
     def stop_all():
+        intro.pause()
         Nivel1.pause()
         Nivel2.pause()
         Nivel3.pause()
@@ -80,6 +81,10 @@ def main(page: ft.Page):
         Nivel7.pause()
         Nivel8.pause()
         Nivel9.pause()
+        
+    def play_intro(e):
+        stop_all()
+        intro.play()    
 
     def play_nivel1(e):
         stop_all()
@@ -117,24 +122,13 @@ def main(page: ft.Page):
         stop_all()
         Nivel9.play()
    
-    # Variable para llevar el estado de reproducción del audio
-    audio_playing = False
 
-    # Función para reproducir/pausar el audio de introducción
-    def toggle_audio(e):
-        nonlocal audio_playing
-        if audio_playing:
-            intro.pause()
-            music_button.icon = ft.icons.PLAY_CIRCLE_FILLED_ROUNDED
-            music_button.tooltip = "Reproducir Intro"
-        else:
-            intro.play()
-            music_button.icon = ft.icons.PAUSE_CIRCLE_FILLED_ROUNDED
-            music_button.tooltip = "Pausar Intro"
-        audio_playing = not audio_playing
-        music_button.update()
-    
     # Creación de componentes de la interfaz
+    
+    btnIntro = ft.FilledButton(text="Escucha el intro",disabled=False,on_click=play_intro)
+    
+    
+    
     btnNivel1 = ft.ElevatedButton(text="Primer Nivel", on_click=play_nivel1)
     img1 = ft.Image(
         src="https://github.com/Prof-Luis1986/MictlanArchivos/blob/Imagenes/Primer-Nivel.jpeg?raw=true", 
@@ -189,21 +183,14 @@ def main(page: ft.Page):
         width=image_width, height=image_height, fit="contain"
     )
     
-    # Botón de música
-    music_button = ft.IconButton(
-        icon=ft.icons.PLAY_CIRCLE_FILLED_ROUNDED, 
-        icon_color="blue400", 
-        icon_size=30,
-        tooltip="Reproducir Intro",
-        on_click=toggle_audio
-    )
+    
     
     # Añadir el botón de música a la primera fila
     page.add(
         ft.Row(
             alignment="start",  # Alineación a la izquierda
             controls=[
-                music_button  # Botón de música alineado a la izquierda
+                btnIntro  # Botón de música alineado a la izquierda
             ]
         )
     )
@@ -246,5 +233,5 @@ def main(page: ft.Page):
     
     page.add(scroll_column)
 
-#ft.app(target=main)
-ft.app(target=main, view=ft.WEB_BROWSER)
+ft.app(target=main)
+#ft.app(target=main, view=ft.WEB_BROWSER)
